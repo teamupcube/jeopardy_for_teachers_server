@@ -26,5 +26,23 @@ app.get('/api/airdate', (req, res, next) => {
     .catch(next);
 });
 
+app.get('/api/search', (req, res, next) => {
+  client.query(`
+    SELECT clues.id, clues.round, category, clues.value, clues.clue, clues.answer, airdate
+    FROM clues
+    JOIN airdates ON clues.game_id = airdates.id
+    JOIN categories ON clues.category_id = categories.id
+    WHERE category LIKE '%SHERMAN%' OR clues.clue LIKE '%Sherman%' OR clues.answer LIKE '%Sherman%'
+    ORDER BY(round, category, value);
+  `)
+    .then(result => {
+      res.send(result.rows);
+    })
+    .catch(next);
+});
+
+
+
+
 const PORT = process.env.PORT;
 app.listen(PORT, () => console.log('server humming along on port', PORT));
