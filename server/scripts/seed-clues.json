@@ -1,0 +1,183 @@
+[
+  {
+    "clue": "Show where sociopath science teacher sells drugs",
+    "answer": "What is Breaking Bad?",
+    "value": 100,
+    "category_id": 1
+  },
+  {
+    "clue": "Cartoon family owns burger joint under their apartment",
+    "answer": "What is Bobs Burgers?",
+    "value": 200,
+    "category_id": 1
+  },
+  {
+    "clue": "Dystopian future where women who can have babies are called red cards",
+    "answer": "What is Handmaid's Tale?",
+    "value": 300,
+    "category_id": 1
+  },
+  {
+    "clue": "Netflix show reboots Tom Clancy Character",
+    "answer": "What is Jack Ryan",
+    "value": 400,
+    "category_id": 1
+  },
+  {
+    "clue": "Middle class woman goes to jail for old crime",
+    "answer": "What is Orange is the New Black?",
+    "value": 500,
+    "category_id": 1
+  },
+  {
+    "clue": "Rhett and Scarlett",
+    "answer": "What is Gone with the Wind?",
+    "value": 100,
+    "category_id": 2
+  },
+  {
+    "clue": "Rose and Jack",
+    "answer": "What is Titanic?",
+    "value": 200,
+    "category_id": 2
+  },
+  {
+    "clue": "Crazy Rich ______",
+    "answer": "What is Asians?",
+    "value": 300,
+    "category_id": 2
+  },
+  {
+    "clue": "The Color _________",
+    "answer": "What is Purple?",
+    "value": 400,
+    "category_id": 2
+  },
+  {
+    "clue": "Schindler's _______",
+    "answer": "What is List?",
+    "value": 500,
+    "category_id": 2
+  },
+  {
+    "clue": "Human's best friend",
+    "answer": "What is a dog?",
+    "value": 100,
+    "category_id": 3
+  },
+  {
+    "clue": "Symbol of US freedom",
+    "answer": "What is a bald eagle?",
+    "value": 200,
+    "category_id": 3
+  },
+  {
+    "clue": "Likes to stay in shell",
+    "answer": "What is a turtle?",
+    "value": 300,
+    "category_id": 3
+  },
+  {
+    "clue": "Sidekick on Kim Possible",
+    "answer": "What is a naked mole rat?",
+    "value": 400,
+    "category_id": 3
+  },
+  {
+    "clue": "March of the _________",
+    "answer": "What is Penguins?",
+    "value": 500,
+    "category_id": 3
+  },
+  {
+    "clue": "___ doesn't fall far from the tree",
+    "answer": "What is apple?",
+    "value": 100,
+    "category_id": 4
+  },
+  {
+    "clue": "Keeps the ship in place",
+    "answer": "What is anchor?",
+    "value": 200,
+    "category_id": 4
+  },
+  {
+    "clue": "Small, disgusting fish",
+    "answer": "What is anchovy?",
+    "value": 400,
+    "category_id": 4
+  },
+  {
+    "clue": "We give foreign _____ to other countries",
+    "answer": "What is aid?",
+    "value": 400,
+    "category_id": 4
+  },
+  {
+    "clue": "joint that attaches your leg to your foot",
+    "answer": "What is ankle?",
+    "value": 500,
+    "category_id": 4
+  },
+  {
+    "clue": "moon and sued shoes",
+    "answer": "What is blue?",
+    "value": 100,
+    "category_id": 5
+  },
+  {
+    "clue": "color and fruit",
+    "answer": "orange?",
+    "value": 200,
+    "category_id": 5
+  },
+  {
+    "clue": "little __ monster",
+    "answer": "What is green?",
+    "value": 400,
+    "category_id": 5
+  },
+  {
+    "clue": "cowardice",
+    "answer": "yellow?",
+    "value": 400,
+    "category_id": 5
+  },
+  {
+    "clue": "seeing _____",
+    "answer": "What is red?",
+    "value": 500,
+    "category_id": 5
+  },
+  {
+    "clue": "north of the border",
+    "answer": "What is Canada?",
+    "value": 100,
+    "category_id": 6
+  },
+  {
+    "clue": "south of the border",
+    "answer": "What is Mexico?",
+    "value": 200,
+    "category_id": 6
+  },
+  {
+    "clue": "down under",
+    "answer": "What is Australia?",
+    "value": 400,
+    "category_id": 6
+  },
+  {
+    "clue": "Site of apartheid",
+    "answer": "What is South Africa?",
+    "value": 400,
+    "category_id": 6
+  },
+  {
+    "clue": "Country within South Africa",
+    "answer": "What is Lesotho?",
+    "value": 500,
+    "category_id": 6
+  }
+
+]

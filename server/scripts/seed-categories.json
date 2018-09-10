@@ -1,0 +1,26 @@
+[
+  {
+    "category": "TV Shows",
+    "board_id": 1
+  },
+  {
+    "category": "Movies",
+    "board_id": 1
+  },
+  {
+    "category": "Animals",
+    "board_id": 1
+  },
+  {
+    "category": "Starts with A",
+    "board_id": 1
+  },
+  {
+    "category": "Colors",
+    "board_id": 1
+  },
+  {
+    "category": "Countries",
+    "board_id": 1
+  }
+]
