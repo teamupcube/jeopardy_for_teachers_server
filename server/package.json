@@ -16,8 +16,8 @@
     "test": "exit 0",
     "start:watch": "nodemon server.js",
     "start": "node server.js",
-    "seed-database-pc": "psql -U postgres jeopardy < ./jeopardy430pm0909.sql",
-    "seed-database-mac": "psql jeopardy < ./jeopardy430pm0909.sql"
+    "seed-database-pc": "psql -U postgres jeopardy < ./database/jeopardy430pm0909.sql",
+    "seed-database-mac": "psql jeopardy < ./database/jeopardy430pm0909.sql"
   },
   "author": "Sarah Flynn",
   "license": "ISC",
