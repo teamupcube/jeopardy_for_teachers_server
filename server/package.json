@@ -4,8 +4,8 @@
   "description": "",
   "main": "http-server.js",
   "scripts": {
-    "create-tables": "node scripts/create-tables.js",
-    "drop-tables": "node scripts/drop-tables.js",
+    "create-tables": "node scripts/create-tables1.js",
+    "drop-tables": "node scripts/drop-tables1.js",
     "recreate-tables": "npm run drop-tables && npm run create-tables",
     "lint": "eslint .",
     "pretest": "npm run lint",
