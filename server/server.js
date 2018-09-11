@@ -155,7 +155,21 @@ app.get('/api/search/:keywords', (req, res, next) => {
     .catch(next);
 });
 
+app.post('/api/board', (req, res, next) => {
+  const body = req.body;
+  if(body.name === 'error') return next('bad name');
 
+  client.query(`
+      INSERT INTO boards (board, user_id),
+      VALUES ($1, $2)
+      RETURNING *, user_id as "userId";
+    `,
+  [body.board, req.userId]
+  ).then(result => {
+    res.send(result.rows[0]);
+  })
+    .catch(next);
+});
 
 
 const PORT = process.env.PORT;
