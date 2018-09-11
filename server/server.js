@@ -103,6 +103,7 @@ app.post('/api/games', (req, res, next) => {
   [body.className, body.boardId]
   ).then(result => {
     res.send(result.rows[0]);
+    console.log('klakdjfa;', result.rows[0]);
   })
     .catch(next);
 });
