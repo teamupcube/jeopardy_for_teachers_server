@@ -32,7 +32,7 @@ client.query(`
   CREATE TABLE IF NOT EXISTS teams (
     id SERIAL PRIMARY KEY,
     team VARCHAR(256) NOT NULL,
-    score INTEGER NOT NULL 
+    score INTEGER 
   );
 
   CREATE TABLE IF NOT EXISTS games (

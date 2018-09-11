@@ -107,6 +107,21 @@ app.post('/api/games', (req, res, next) => {
     .catch(next);
 });
 
+app.post('/api/teams', (req, res, next) => {
+  const body = req.body;
+  if(body.teamName === 'error') return next('bad teamName');
+  client.query(`
+    INSERT INTO teams(team)
+    VALUES ($1)
+    RETURNING *;
+    `,
+  [body.teamName]
+  ).then(result => {
+    res.send(result.rows[0]);
+  })
+    .catch(next);
+});
+
 app.get('/api/boards', (req, res, next) => {
   client.query(`
     SELECT id, name
