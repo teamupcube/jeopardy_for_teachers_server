@@ -14,12 +14,11 @@ const client = require('./db-client');
 app.post('/api/auth/signup', (req, res) => {
   const body = req.body;
   const name = body.name;
-  const email = body.email;
   const password = body.password;
 
-  if(!email || !password) {
+  if(!name || !password) {
     res.status(400).send({
-      error: 'email and password are required'
+      error: 'name and password are required'
     });
     return;
   }
@@ -27,21 +26,21 @@ app.post('/api/auth/signup', (req, res) => {
   client.query(`
     select count(*)
     from users
-    where email = $1
+    where name = $1
     `,
-  [email])
+  [name])
     .then(results => {
       if(results.rows[0].count > 0) {
-        res.status(400).send({ error: 'email already in use' });
+        res.status(400).send({ error: 'username already in use' });
         return;
       }
 
       client.query(`
-        insert into users(name,email,password)
-        values($1, $2, $3)
-        returning id, email
+        insert into users(name, password)
+        values($1, $2)
+        returning id, name
       `,
-      [name, email, password])
+      [name, password])
         .then(results => {
           res.send(results.rows[0]);
         });
@@ -51,32 +50,31 @@ app.post('/api/auth/signup', (req, res) => {
 app.post('/api/auth/signin', (req, res) => {
   const body = req.body;
   const name = body.name;
-  const email = body.email;
   const password = body.password;
 
-  if(!email || !password) {
+  if(!name || !password) {
     res.status(400).send({
-      error: 'email and password are required'
+      error: 'username and password are required'
     });
     return;
   }
 
   client.query(`
-    SELECT id, name, email, password
+    SELECT id, name, password
     FROM users
-    WHERE email = $1
+    WHERE name = $1
   `,
-  [email]
+  [name]
   )
     .then(results => {
       const row = results.rows[0];
       if(!row || row.password !== password) {
-        res.status(401).send({ error: 'invalid email or password' });
+        res.status(401).send({ error: 'invalid username or password' });
         return;
       }
       res.send({
         id: row.id,
-        email: row.email
+        name: row.name
       });
     });
 });
@@ -89,7 +87,7 @@ app.use((req, res, next) => {
     });
     return;
   }
-  req.userID = id;
+  req.userId = id;
 
   next();
 });
@@ -107,7 +105,7 @@ app.post('/api/games', (req, res, next) => {
     res.sent(result.rows[0]);
   })
     .catch(next);
-})
+});
 
 app.get('/api/boards', (req, res, next) => {
   client.query(`
@@ -121,7 +119,7 @@ app.get('/api/boards', (req, res, next) => {
       res.send(result.rows);
     })
     .catch(next);
-})
+});
 
 app.get('/api/airdate', (req, res, next) => {
   client.query(`
