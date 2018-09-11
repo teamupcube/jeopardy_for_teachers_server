@@ -49,6 +49,14 @@ client.query(`
     game_id INTEGER NOT NULL REFERENCES games(id)
   );
 
+  CREATE TABLE IF NOT EXISTS clues_played (
+    id SERIAL PRIMARY KEY,
+    clue_id INTEGER NOT NULL REFERENCES clues(id),
+    game_id INTEGER NOT NULL REFERENCES games(id),
+    team_id INTEGER NOT NULL REFERENCES teams(id),
+    turn_result INTEGER NOT NULL
+  );
+
 `)
   .then(
     () => console.log('create tables complete'),

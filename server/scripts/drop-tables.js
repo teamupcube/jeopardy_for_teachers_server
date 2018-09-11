@@ -9,6 +9,10 @@ client.query(`
   DROP TABLE IF EXISTS teams CASCADE;
   DROP TABLE IF EXISTS games CASCADE;
   DROP TABLE IF EXISTS team_game CASCADE;
+  DROP TABLE IF EXISTS clues_played CASCADE;
+  DROP TABLE IF EXISTS historic_airdates CASCADE;
+  DROP TABLE IF EXISTS historic_categories CASCADE;
+  DROP TABLE IF EXISTS historic_clues CASCADE;
 `)
   .then(
     () => console.log('drop tables complete'),

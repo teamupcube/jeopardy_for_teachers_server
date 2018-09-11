@@ -4,20 +4,18 @@
   "description": "",
   "main": "http-server.js",
   "scripts": {
-    "create-database-mac": "psql jeopardy < ./database/jeopardy430pm0909.sql",
-    "create-database-pc": "psql -U postgres jeopardy < ./database/jeopardy430pm0909.sql",
-    "drop-database": "node scripts/drop-database",
-    "create-tables": "node scripts/create-tables.js",
+    "create-historic-tables-mac": "psql jeopardy < ./database/jeopardy745pm0910.sql",
+    "create-historic-tables-pc": "psql -U postgres jeopardy < ./database/jeopardy745pm0910.sql",
+    "create-user-tables": "node scripts/create-tables.js",
+    "seed-user-data": "node scripts/seed-user-data.js",
     "drop-tables": "node scripts/drop-tables.js",
-    "recreate-tables": "npm run drop-tables && npm run create-tables",
+    "reload-all-mac": "npm run drop-tables && npm run create-user-tables && npm run seed-user-data && npm run create-historic-tables-mac",
+    "reload-all-pc": "npm run drop-tables && npm run create-user-tables && npm run seed-user-data && npm run create-historic-tables-pc",
     "lint": "eslint .",
     "pretest": "npm run lint",
     "test": "exit 0",
     "start:watch": "nodemon server.js",
-    "start": "node server.js",
-
-    "seed-user-database": "node scripts/seed-board-data.js",
-    "db-load-all": "npm run recreate-tables && npm run seed-user-database"
+    "start": "node server.js"
   },
   "author": "Sarah Flynn",
   "license": "ISC",
