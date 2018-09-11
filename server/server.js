@@ -107,7 +107,7 @@ app.post('/api/games', (req, res, next) => {
     res.sent(result.rows[0]);
   })
     .catch(next);
-})
+});
 
 app.get('/api/boards', (req, res, next) => {
   client.query(`
@@ -121,7 +121,7 @@ app.get('/api/boards', (req, res, next) => {
       res.send(result.rows);
     })
     .catch(next);
-})
+});
 
 app.get('/api/airdate', (req, res, next) => {
   client.query(`
