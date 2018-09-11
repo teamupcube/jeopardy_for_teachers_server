@@ -13,6 +13,7 @@ const client = require('./db-client');
 
 app.post('/api/auth/signup', (req, res) => {
   const body = req.body;
+  const name = body.name;
   const email = body.email;
   const password = body.password;
 
@@ -36,11 +37,11 @@ app.post('/api/auth/signup', (req, res) => {
       }
 
       client.query(`
-        insert into users(email,password)
-        values($1, $2)
+        insert into users(name,email,password)
+        values($1, $2, $3)
         returning id, email
       `,
-      [email, password])
+      [name, email, password])
         .then(results => {
           res.send(results.rows[0]);
         });
@@ -49,6 +50,7 @@ app.post('/api/auth/signup', (req, res) => {
 
 app.post('/api/auth/signin', (req, res) => {
   const body = req.body;
+  const name = body.name;
   const email = body.email;
   const password = body.password;
 
@@ -60,7 +62,7 @@ app.post('/api/auth/signin', (req, res) => {
   }
 
   client.query(`
-    SELECT id, email, password
+    SELECT id, name, email, password
     FROM users
     WHERE email = $1
   `,
@@ -91,6 +93,35 @@ app.use((req, res, next) => {
 
   next();
 });
+
+app.post('/api/games', (req, res, next) => {
+  const body = req.body;
+  if(body.name === 'error') return next('bad name');
+  client.query(`
+    INSERT INTO games(class_name)
+    VALUES ($1)
+    RETURNING *;
+  `,
+  [body.className]
+  ).then(result => {
+    res.sent(result.rows[0]);
+  })
+    .catch(next);
+})
+
+app.get('/api/boards', (req, res, next) => {
+  client.query(`
+    SELECT id, name
+    FROM boards
+    WHERE user_id = $1
+    ORDER BY id; 
+  `,
+  [req.userId])
+    .then(result => {
+      res.send(result.rows);
+    })
+    .catch(next);
+})
 
 app.get('/api/airdate', (req, res, next) => {
   client.query(`
