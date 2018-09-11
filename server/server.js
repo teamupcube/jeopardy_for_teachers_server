@@ -155,17 +155,19 @@ app.get('/api/search/:keywords', (req, res, next) => {
     .catch(next);
 });
 
-app.post('/api/board', (req, res, next) => {
-  const body = req.body;
-  if(body.name === 'error') return next('bad name');
+app.post('/api/me/boards/:board', (req, res, next) => {
+  let body = req.params.board;
+  console.log('body', body);
+  if(body === 'error') return next('bad name');
 
   client.query(`
-      INSERT INTO boards (board, user_id),
+      INSERT INTO boards (name, user_id)
       VALUES ($1, $2)
       RETURNING *, user_id as "userId";
     `,
-  [body.board, req.userId]
+  [body, req.userId]
   ).then(result => {
+    console.log('result', result.rows[0]);
     res.send(result.rows[0]);
   })
     .catch(next);
