@@ -3,9 +3,12 @@ const client = require('../db-client');
 
 client.query(`
   DROP TABLE IF EXISTS boards CASCADE;
-  DROP TABLE IF EXISTS user_categories CASCADE;
-  DROP TABLE IF EXISTS user_clues CASCADE;
+  DROP TABLE IF EXISTS categories CASCADE;
+  DROP TABLE IF EXISTS clues CASCADE;
   DROP TABLE IF EXISTS users CASCADE;
+  DROP TABLE IF EXISTS teams CASCADE;
+  DROP TABLE IF EXISTS games CASCADE;
+  DROP TABLE IF EXISTS team_game CASCADE;
 `)
   .then(
     () => console.log('drop tables complete'),

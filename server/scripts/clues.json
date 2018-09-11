@@ -114,55 +114,55 @@
     "category_id": 4
   },
   {
-    "clue": "joint that attaches your leg to your foot",
+    "clue": "Joint that attaches your leg to your foot",
     "answer": "What is ankle?",
     "value": 500,
     "category_id": 4
   },
   {
-    "clue": "moon and sued shoes",
+    "clue": "Moon and sued shoes",
     "answer": "What is blue?",
     "value": 100,
     "category_id": 5
   },
   {
-    "clue": "color and fruit",
-    "answer": "orange?",
+    "clue": "Color and fruit",
+    "answer": "What is orange?",
     "value": 200,
     "category_id": 5
   },
   {
-    "clue": "little __ monster",
+    "clue": "Little __ monster",
     "answer": "What is green?",
     "value": 400,
     "category_id": 5
   },
   {
-    "clue": "cowardice",
-    "answer": "yellow?",
+    "clue": "Cowardice",
+    "answer": "What is yellow?",
     "value": 400,
     "category_id": 5
   },
   {
-    "clue": "seeing _____",
+    "clue": "Seeing _____",
     "answer": "What is red?",
     "value": 500,
     "category_id": 5
   },
   {
-    "clue": "north of the border",
+    "clue": "North of the border",
     "answer": "What is Canada?",
     "value": 100,
     "category_id": 6
   },
   {
-    "clue": "south of the border",
+    "clue": "South of the border",
     "answer": "What is Mexico?",
     "value": 200,
     "category_id": 6
   },
   {
-    "clue": "down under",
+    "clue": "Down under",
     "answer": "What is Australia?",
     "value": 400,
     "category_id": 6

@@ -16,19 +16,39 @@ client.query(`
     user_id INTEGER NOT NULL REFERENCES users(id)
   );
 
-  CREATE TABLE IF NOT EXISTS user_categories (
+  CREATE TABLE IF NOT EXISTS categories (
     id SERIAL PRIMARY KEY,
     category VARCHAR(256) NOT NULL,
     board_id INTEGER NOT NULL REFERENCES boards(id)
   );
 
-  CREATE TABLE IF NOT EXISTS user_clues (
+  CREATE TABLE IF NOT EXISTS clues (
     id SERIAL PRIMARY KEY,
     clue VARCHAR(2000) NOT NULL,
     answer VARCHAR(2000) NOT NULL,
     value INTEGER NOT NULL,
-    category_id INTEGER NOT NULL REFERENCES user_categories(id)
-  )
+    category_id INTEGER NOT NULL REFERENCES categories(id)
+  );
+
+  CREATE TABLE IF NOT EXISTS teams (
+    id SERIAL PRIMARY KEY,
+    team VARCHAR(256) NOT NULL,
+    score INTEGER NOT NULL 
+  );
+
+  CREATE TABLE IF NOT EXISTS games (
+    id SERIAL PRIMARY KEY,
+    class_name VARCHAR(256) NOT NULL,
+    board_id INTEGER NOT NULL REFERENCES boards(id), 
+    turn INTEGER NOT NULL REFERENCES teams(id)
+  );
+
+  CREATE TABLE IF NOT EXISTS team_game (
+    id SERIAL PRIMARY KEY,
+    team_id INTEGER NOT NULL REFERENCES teams(id), 
+    game_id INTEGER NOT NULL REFERENCES games(id)
+  );
+
 `)
   .then(
     () => console.log('create tables complete'),
