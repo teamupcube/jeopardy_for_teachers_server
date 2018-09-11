@@ -96,13 +96,13 @@ app.post('/api/games', (req, res, next) => {
   const body = req.body;
   if(body.name === 'error') return next('bad name');
   client.query(`
-    INSERT INTO games(class_name)
-    VALUES ($1)
+    INSERT INTO games(class_name, board_id)
+    VALUES ($1, $2)
     RETURNING *;
   `,
-  [body.className]
+  [body.className, body.boardId]
   ).then(result => {
-    res.sent(result.rows[0]);
+    res.send(result.rows[0]);
   })
     .catch(next);
 });
