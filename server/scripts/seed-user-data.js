@@ -12,10 +12,10 @@ Promise.all(
 
   users.map(user => {
     return client.query(`
-        INSERT INTO users (name, email, password)
-        VALUES ($1, $2, $3);
+        INSERT INTO users (name, password)
+        VALUES ($1, $2);
     `,
-    [user.name, user.email, user.password]
+    [user.name, user.password]
     ).then(result => result.rows[0]);
   })
 )
