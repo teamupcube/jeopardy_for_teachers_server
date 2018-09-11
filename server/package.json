@@ -4,16 +4,21 @@
   "description": "",
   "main": "http-server.js",
   "scripts": {
-    "create-tables": "node scripts/create-tables1.js",
-    "drop-tables": "node scripts/drop-tables1.js",
-    "recreate-tables": "npm run drop-tables && npm run create-tables",
+    "create-tables1": "node scripts/create-tables1.js",
+    "drop-tables1": "node scripts/drop-tables1.js",
+    "recreate-tables1": "npm run drop-tables && npm run create-tables",
+    "create-tables2": "node scripts/create-tables2.js",
+    "drop-tables2": "node scripts/drop-tables2.js",
+    "recreate-tables2": "npm run drop-tables2 && npm run create-tables2",
     "lint": "eslint .",
     "pretest": "npm run lint",
     "test": "exit 0",
     "start:watch": "nodemon server.js",
     "start": "node server.js",
     "seed-database-pc": "psql -U postgres jeopardy < ./database/jeopardy430pm0909.sql",
-    "seed-database-mac": "psql jeopardy < ./database/jeopardy430pm0909.sql"
+    "seed-database-mac": "psql jeopardy < ./database/jeopardy430pm0909.sql",
+    "seed-user-database": "node scripts/seed-board-data.js",
+    "db-load-all": "npm run recreate-tables && npm run seed-user-database"
   },
   "author": "Sarah Flynn",
   "license": "ISC",
@@ -21,11 +26,11 @@
     "cool-ascii-faces": "^1.3.4",
     "dotenv": "^6.0.0",
     "express": "^4.16.3",
-    "morgan": "^1.9.0",
-    "pg": "^7.4.3"
+    "morgan": "^1.9.0"
   },
   "devDependencies": {
     "eslint": "^4.19.1",
-    "nodemon": "^1.18.4"
+    "nodemon": "^1.18.4",
+    "pg": "^7.4.3"
   }
 }
