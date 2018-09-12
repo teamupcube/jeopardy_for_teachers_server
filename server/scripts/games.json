@@ -3,5 +3,10 @@
     "class_name": "301",
     "board_id": 1,
     "turn": 1
+  },
+  {
+    "class_name": "405B",
+    "board_id": 2,
+    "turn": 2
   }
 ]
