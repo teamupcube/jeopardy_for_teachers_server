@@ -108,15 +108,31 @@ app.post('/api/games/:className/:boardId', (req, res, next) => {
     .catch(next);
 });
 
-app.post('/api/teams', (req, res, next) => {
-  const body = req.body;
-  if(body.teamName === 'error') return next('bad teamName');
+app.post('/api/teams/:teamName', (req, res, next) => {
+  let teamName = req.params.teamName;
+  if(teamName === 'error') return next('bad teamName');
   client.query(`
     INSERT INTO teams(team)
     VALUES ($1)
+    RETURNING *, id as "teamId";
+    `,
+  [teamName]
+  ).then(result => {
+    res.send(result.rows[0]);
+  })
+    .catch(next);
+});
+
+app.post('/api/teams/games/:teamId/:gameId', (req, res, next) => {
+  let teamId = req.params.teamId;
+  let gameId = req.params.gameId;
+  if(teamId === 'error' || gameId === 'error') return next('bad teamId or gameId when adding to team_game');
+  client.query(`
+    INSERT INTO team_game (team_id, game_id)
+    VALUES ($1, $2)
     RETURNING *;
     `,
-  [body.teamName]
+  [teamId, gameId]
   ).then(result => {
     res.send(result.rows[0]);
   })
