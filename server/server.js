@@ -153,26 +153,37 @@ app.get('/api/me/boards', (req, res, next) => {
     .catch(next);
 });
 
-// app.get('/api/teams/games/:gameId', (req, res, next) => {
-//   let gameId = req.params.gameId;
-//   client.query(`
-//   SELECT team_id
-//   FROM team_game
-//   WHERE game_id = $1;
-//   `,
-//   [gameId])
-//     .then(result => {
-//       res.send(result.rows)
-//       let teamId = result.rows;
-//       client.query(`
-//       SELECT team
-//       FROM teams
-//       WHERE id = 
-//       `)
-//       console.log(teamId)
-//     })
-//     .catch(next);
-// })
+app.get('/api/games-played', (req, res, next) => {
+  client.query(`
+    SELECT distinct class_name
+    FROM clues_played
+    JOIN games ON clues_played.game_id = games.id
+    JOIN boards ON games.board_id = boards.id
+    WHERE user_id = $1;
+  `,
+  [req.userId]
+  )
+    .then(result => {
+      res.send(result.rows);
+    })
+})
+
+app.get('/api/results/:id', (req, res, next) => {
+  let gameId = req.params.gameId;
+  if(gameId === 'error') return next('bad gameId');
+  client.query(`
+    SELECT *
+    FROM teams
+    JOIN team_game on teams.id = team_game.team_id
+    JOIN games on games.id = 1
+    RETURNING *;
+    `,
+  [gameId]
+  ).then(result => {
+    res.send(result.rows[0]);
+  })
+    .catch(next);
+})
 
 app.get('/api/airdate', (req, res, next) => {
   client.query(`

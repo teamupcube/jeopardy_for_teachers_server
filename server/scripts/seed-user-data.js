@@ -7,6 +7,7 @@ const users = require('./users.json');
 const teams = require('./teams.json');
 const games = require('./games.json');
 const team_game = require('./team_game.json');
+const clues_played = require('./clues-played.json')
 
 Promise.all(
 
@@ -91,6 +92,19 @@ Promise.all(
           VALUES ($1, $2);
       `,
         [team_game.team_id, team_game.game_id]
+        ).then(result => result.rows[0]);
+      })
+    );
+  })
+
+  .then(() => {
+    return Promise.all(
+      clues_played.map(clues_played => {
+        return client.query(`
+          INSERT INTO clues_played (clue_id, game_id)
+          VALUES ($1, $2);
+      `,
+        [clues_played.clue_id, clues_played.game_id]
         ).then(result => result.rows[0]);
       })
     );

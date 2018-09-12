@@ -52,8 +52,8 @@ client.query(`
     id SERIAL PRIMARY KEY,
     clue_id INTEGER NOT NULL REFERENCES clues(id),
     game_id INTEGER NOT NULL REFERENCES games(id),
-    team_id INTEGER NOT NULL REFERENCES teams(id),
-    turn_result INTEGER NOT NULL
+    team_id INTEGER REFERENCES teams(id),
+    turn_result INTEGER 
   );
 
 `)
