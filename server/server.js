@@ -92,15 +92,16 @@ app.use((req, res, next) => {
   next();
 });
 
-app.post('/api/games', (req, res, next) => {
-  const body = req.body;
-  if(body.name === 'error') return next('bad name');
+app.post('/api/games/:className/:boardId', (req, res, next) => {
+  let className = req.params.className;
+  let boardId = req.params.boardId;
+  if(className === 'error' || boardId === 'error') return next('bad name');
   client.query(`
     INSERT INTO games(class_name, board_id)
     VALUES ($1, $2)
-    RETURNING *;
+    RETURNING *, board_id as "boardId";
   `,
-  [body.className, body.boardId]
+  [className, boardId]
   ).then(result => {
     res.send(result.rows[0]);
   })
@@ -122,7 +123,7 @@ app.post('/api/teams', (req, res, next) => {
     .catch(next);
 });
 
-app.get('/api/boards', (req, res, next) => {
+app.get('/api/me/boards', (req, res, next) => {
   client.query(`
     SELECT id, name
     FROM boards
