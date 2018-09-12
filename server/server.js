@@ -178,7 +178,23 @@ app.get('/api/search/:keywords', (req, res, next) => {
     .catch(next);
 });
 
+app.post('/api/me/boards/:board', (req, res, next) => {
+  let body = req.params.board;
+  console.log('body', body);
+  if(body === 'error') return next('bad name');
 
+  client.query(`
+      INSERT INTO boards (name, user_id)
+      VALUES ($1, $2)
+      RETURNING *, user_id as "userId";
+    `,
+  [body, req.userId]
+  ).then(result => {
+    console.log('result', result.rows[0]);
+    res.send(result.rows[0]);
+  })
+    .catch(next);
+});
 
 
 const PORT = process.env.PORT;
