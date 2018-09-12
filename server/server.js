@@ -92,37 +92,54 @@ app.use((req, res, next) => {
   next();
 });
 
-app.post('/api/games', (req, res, next) => {
-  const body = req.body;
-  if(body.name === 'error') return next('bad name');
+app.post('/api/games/:className/:boardId', (req, res, next) => {
+  let className = req.params.className;
+  let boardId = req.params.boardId;
+  if(className === 'error' || boardId === 'error') return next('bad name');
   client.query(`
     INSERT INTO games(class_name, board_id)
     VALUES ($1, $2)
-    RETURNING *;
+    RETURNING *, board_id as "boardId";
   `,
-  [body.className, body.boardId]
+  [className, boardId]
   ).then(result => {
     res.send(result.rows[0]);
   })
     .catch(next);
 });
 
-app.post('/api/teams', (req, res, next) => {
-  const body = req.body;
-  if(body.teamName === 'error') return next('bad teamName');
+app.post('/api/teams/:teamName', (req, res, next) => {
+  let teamName = req.params.teamName;
+  if(teamName === 'error') return next('bad teamName');
   client.query(`
     INSERT INTO teams(team)
     VALUES ($1)
-    RETURNING *;
+    RETURNING *, id as "teamId";
     `,
-  [body.teamName]
+  [teamName]
   ).then(result => {
     res.send(result.rows[0]);
   })
     .catch(next);
 });
 
-app.get('/api/boards', (req, res, next) => {
+app.post('/api/teams/games/:teamId/:gameId', (req, res, next) => {
+  let teamId = req.params.teamId;
+  let gameId = req.params.gameId;
+  if(teamId === 'error' || gameId === 'error') return next('bad teamId or gameId when adding to team_game');
+  client.query(`
+    INSERT INTO team_game (team_id, game_id)
+    VALUES ($1, $2)
+    RETURNING *;
+    `,
+  [teamId, gameId]
+  ).then(result => {
+    res.send(result.rows[0]);
+  })
+    .catch(next);
+});
+
+app.get('/api/me/boards', (req, res, next) => {
   client.query(`
     SELECT id, name
     FROM boards
@@ -136,12 +153,25 @@ app.get('/api/boards', (req, res, next) => {
     .catch(next);
 });
 
-// app.get('/api/game', (req,res,next) => {
+// app.get('/api/teams/games/:gameId', (req, res, next) => {
+//   let gameId = req.params.gameId;
 //   client.query(`
-//     SELECT id, class_name
-//     FROM games
-//     WHERE user_id = $1
-//   `)
+//   SELECT team_id
+//   FROM team_game
+//   WHERE game_id = $1;
+//   `,
+//   [gameId])
+//     .then(result => {
+//       res.send(result.rows)
+//       let teamId = result.rows;
+//       client.query(`
+//       SELECT team
+//       FROM teams
+//       WHERE id = 
+//       `)
+//       console.log(teamId)
+//     })
+//     .catch(next);
 // })
 
 app.get('/api/airdate', (req, res, next) => {
