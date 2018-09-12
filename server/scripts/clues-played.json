@@ -150,6 +150,10 @@
   {
     "game_id": 2,
     "clue_id": 7
+  },
+  { 
+    "game_id": 3,
+    "clue_id": 8
   }
 ]
   

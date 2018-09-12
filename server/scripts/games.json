@@ -8,5 +8,10 @@
     "class_name": "405B",
     "board_id": 2,
     "turn": 2
+  },
+  { 
+    "class_name": "Game2",
+    "board_id": 2,
+    "turn": 2
   }
 ]
