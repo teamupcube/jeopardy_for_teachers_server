@@ -103,7 +103,6 @@ app.post('/api/games', (req, res, next) => {
   [body.className, body.boardId]
   ).then(result => {
     res.send(result.rows[0]);
-    console.log('klakdjfa;', result.rows[0]);
   })
     .catch(next);
 });
@@ -136,6 +135,14 @@ app.get('/api/boards', (req, res, next) => {
     })
     .catch(next);
 });
+
+// app.get('/api/game', (req,res,next) => {
+//   client.query(`
+//     SELECT id, class_name
+//     FROM games
+//     WHERE user_id = $1
+//   `)
+// })
 
 app.get('/api/airdate', (req, res, next) => {
   client.query(`
