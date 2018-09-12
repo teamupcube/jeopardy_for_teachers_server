@@ -214,6 +214,27 @@ app.post('/api/me/boards/:board/categories/:category', (req, res, next) => {
     .catch(next);
 });
 
+app.post('/api/me/categories/:category/clues/:clue/:answer/:value', (req, res, next) => {
+  let clue = req.params.clue;
+  let answer = req.params.answer;
+  let value = req.params.value;
+  let category = req.params.category;
+
+  if(clue === 'error' || category === 'error') return next('bad input');
+
+  client.query(`
+      INSERT INTO clues (clue, answer, value, category_id)
+      VALUES ($1, $2, $3, $4)
+      RETURNING *, category_id as "categoryId";
+    `,
+  [clue, answer, value, category]
+  ).then(result => {
+    console.log('result', result.rows[0]);
+    res.send(result.rows[0]);
+  })
+    .catch(next);
+});
+
 
 const PORT = process.env.PORT;
 app.listen(PORT, () => console.log('server humming along on port', PORT));
