@@ -180,7 +180,7 @@ app.get('/api/search/:keywords', (req, res, next) => {
 
 app.post('/api/me/boards/:board', (req, res, next) => {
   let body = req.params.board;
-  console.log('body', body);
+  console.log('server board body', body);
   if(body === 'error') return next('bad name');
 
   client.query(`
@@ -189,6 +189,24 @@ app.post('/api/me/boards/:board', (req, res, next) => {
       RETURNING *, user_id as "userId";
     `,
   [body, req.userId]
+  ).then(result => {
+    console.log('result', result.rows[0]);
+    res.send(result.rows[0]);
+  })
+    .catch(next);
+});
+
+app.post('/api/me/boards/:board/categories/:category', (req, res, next) => {
+  let board = req.params.board;
+  let category = req.params.category;
+  if(board === 'error' || category === 'error') return next('bad input');
+
+  client.query(`
+      INSERT INTO categories (category, board_id)
+      VALUES ($1, $2)
+      RETURNING *, board_id as "boardId";
+    `,
+  [category, board]
   ).then(result => {
     console.log('result', result.rows[0]);
     res.send(result.rows[0]);
