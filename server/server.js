@@ -179,16 +179,16 @@ app.get('/api/search/:keywords', (req, res, next) => {
 });
 
 app.post('/api/me/boards/:board', (req, res, next) => {
-  let body = req.params.board;
-  console.log('server board body', body);
-  if(body === 'error') return next('bad name');
+  let board = req.params.board;
+  console.log('server board board', board);
+  if(board === 'error') return next('bad name');
 
   client.query(`
       INSERT INTO boards (name, user_id)
       VALUES ($1, $2)
       RETURNING *, user_id as "userId";
     `,
-  [body, req.userId]
+  [board, req.userId]
   ).then(result => {
     console.log('result', result.rows[0]);
     res.send(result.rows[0]);
