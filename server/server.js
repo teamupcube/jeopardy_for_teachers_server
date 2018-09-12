@@ -96,13 +96,28 @@ app.post('/api/games', (req, res, next) => {
   const body = req.body;
   if(body.name === 'error') return next('bad name');
   client.query(`
-    INSERT INTO games(class_name)
-    VALUES ($1)
+    INSERT INTO games(class_name, board_id)
+    VALUES ($1, $2)
     RETURNING *;
   `,
-  [body.className]
+  [body.className, body.boardId]
   ).then(result => {
-    res.sent(result.rows[0]);
+    res.send(result.rows[0]);
+  })
+    .catch(next);
+});
+
+app.post('/api/teams', (req, res, next) => {
+  const body = req.body;
+  if(body.teamName === 'error') return next('bad teamName');
+  client.query(`
+    INSERT INTO teams(team)
+    VALUES ($1)
+    RETURNING *;
+    `,
+  [body.teamName]
+  ).then(result => {
+    res.send(result.rows[0]);
   })
     .catch(next);
 });
@@ -120,6 +135,14 @@ app.get('/api/boards', (req, res, next) => {
     })
     .catch(next);
 });
+
+// app.get('/api/game', (req,res,next) => {
+//   client.query(`
+//     SELECT id, class_name
+//     FROM games
+//     WHERE user_id = $1
+//   `)
+// })
 
 app.get('/api/airdate', (req, res, next) => {
   client.query(`
