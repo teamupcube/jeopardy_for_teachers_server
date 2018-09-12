@@ -153,12 +153,25 @@ app.get('/api/me/boards', (req, res, next) => {
     .catch(next);
 });
 
-// app.get('/api/game', (req,res,next) => {
+// app.get('/api/teams/games/:gameId', (req, res, next) => {
+//   let gameId = req.params.gameId;
 //   client.query(`
-//     SELECT id, class_name
-//     FROM games
-//     WHERE user_id = $1
-//   `)
+//   SELECT team_id
+//   FROM team_game
+//   WHERE game_id = $1;
+//   `,
+//   [gameId])
+//     .then(result => {
+//       res.send(result.rows)
+//       let teamId = result.rows;
+//       client.query(`
+//       SELECT team
+//       FROM teams
+//       WHERE id = 
+//       `)
+//       console.log(teamId)
+//     })
+//     .catch(next);
 // })
 
 app.get('/api/airdate', (req, res, next) => {
