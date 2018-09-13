@@ -164,8 +164,8 @@ app.get('/api/teams/:gameId', (req, res, next) => {
   `,
   [gameId]
   ).then(result => {
-      res.send(result.rows);
-    })
+    res.send(result.rows);
+  })
     .catch(next);
 });
 
