@@ -56,6 +56,25 @@ client.query(`
     turn_result INTEGER 
   );
 
+  CREATE TABLE IF NOT EXISTS historic_airdates (
+    id SERIAL PRIMARY KEY,
+    airdate INTEGER NOT NULL
+  );
+
+  CREATE TABLE IF NOT EXISTS historic_categories (
+    id SERIAL PRIMARY KEY,
+    category TEXT NOT NULL
+  );
+
+  CREATE TABLE IF NOT EXISTS historic_clues (
+    id SERIAL PRIMARY KEY,
+    game_id INTEGER NOT NULL,
+    round INTEGER NOT NULL,
+    value INTEGER NOT NULL,
+    category_id INTEGER NOT NULL,
+    clue TEXT NOT NULL,
+    answer TEXT NOT NULL
+  );
 `)
   .then(
     () => console.log('create tables complete'),
