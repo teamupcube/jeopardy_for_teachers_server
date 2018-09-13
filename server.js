@@ -79,7 +79,7 @@ app.post('/api/auth/signin', (req, res) => {
     });
 });
 
-app.use((req, res, next) => {
+app.use('/api', (req, res, next) => {
   const id = req.get('Authorization');
   if(!id) {
     res.status(403).send({
@@ -90,6 +90,10 @@ app.use((req, res, next) => {
   req.userId = id;
 
   next();
+});
+
+app.use((req, res) => {
+  res.sendFile('index.html', { root: 'public' }) ;
 });
 
 app.post('/api/games/:className/:boardId', (req, res, next) => {
@@ -341,7 +345,7 @@ app.post('/api/me/categories/:category/clues/:clue/:answer/:value', (req, res, n
     .catch(next);
 });
 
-app.put('/api/game/:gameId/turn/:turn', (req,res,next) => {
+app.put('/api/game/:gameId/turn/:turn', (req, res, next) => {
   let gameId = req.params.gameId;
   let turn = req.params.turn;
   if(gameId === 'error' || turn === 'error') return next('bad input');
