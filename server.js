@@ -92,6 +92,10 @@ app.use('/api', (req, res, next) => {
   next();
 });
 
+app.use((req, res) => {
+  res.sendFile('index.html', { root: 'public' }) ;
+});
+
 app.post('/api/games/:className/:boardId', (req, res, next) => {
   let className = req.params.className;
   let boardId = req.params.boardId;
@@ -112,8 +116,8 @@ app.post('/api/teams/:teamName', (req, res, next) => {
   let teamName = req.params.teamName;
   if(teamName === 'error') return next('bad teamName');
   client.query(`
-    INSERT INTO teams(team)
-    VALUES ($1)
+    INSERT INTO teams(team, score)
+    VALUES ($1, 0)
     RETURNING *, id as "teamId";
     `,
   [teamName]
@@ -168,20 +172,36 @@ app.get('/api/teams/:gameId', (req, res, next) => {
   })
     .catch(next);
 });
-
 app.get('/api/games-played', (req, res) => {
   client.query(`
-    SELECT distinct class_name
-    FROM clues_played
-    JOIN games ON clues_played.game_id = games.id
-    JOIN boards ON games.board_id = boards.id
-    WHERE user_id = $1;
+    SELECT DISTINCT games.class_name, games.id
+    FROM games
+    JOIN boards ON boards.id = games.board_id
+    WHERE boards.user_id = $1
+    ORDER BY games.id
   `,
   [req.userId]
   )
     .then(result => {
       res.send(result.rows);
     });
+});
+
+app.get('/api/scores/:gameId', (req, res, next) => {
+  let gameId = req.params.gameId;
+  if(gameId === 'error') return next('bad gameId');
+  client.query(`
+  SELECT teams.id, teams.team, teams.score
+  FROM teams
+  JOIN team_game ON team_game.team_id = teams.id
+  JOIN games ON games.id = team_game.game_id
+  WHERE games.id = $1;
+    `,
+  [gameId]
+  ).then(result => {
+    res.send(result.rows);
+  })
+    .catch(next);
 });
 
 app.get('/api/results/:id', (req, res, next) => {
@@ -328,6 +348,38 @@ app.post('/api/me/categories/:category/clues/:clue/:answer/:value', (req, res, n
 app.use((req, res) => {
   res.sendFile('index.html', { root: 'public' }) ;
 });
+
+app.put('/api/game/:gameId/turn/:turn', (req, res, next) => {
+  let gameId = req.params.gameId;
+  let turn = req.params.turn;
+  if(gameId === 'error' || turn === 'error') return next('bad input');
+  client.query(`
+    UPDATE games
+    SET turn = $2
+    WHERE games.id = $1
+    RETURNING games.turn;
+    `,
+  [gameId, turn])
+    .catch(next);
+});
+
+
+app.get('/api/get-turn/:id', (req, res, next) => {
+  let gameId = req.params.id;
+  client.query(`
+    SELECT turn, team
+    FROM games
+    JOIN teams ON teams.id = games.turn
+    WHERE games.id = $1;
+  `,
+  [gameId]
+  ).then(result => {
+    res.send(result.rows);
+  })
+    .catch(next);
+});
+
+
 
 
 const PORT = process.env.PORT;
