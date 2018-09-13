@@ -15,7 +15,7 @@ app.post('/api/auth/signup', (req, res) => {
   const body = req.body;
   const name = body.name;
   const password = body.password;
-
+  
   if(!name || !password) {
     res.status(400).send({
       error: 'name and password are required'
@@ -79,7 +79,7 @@ app.post('/api/auth/signin', (req, res) => {
     });
 });
 
-app.use((req, res, next) => {
+app.use('/api', (req, res, next) => {
   const id = req.get('Authorization');
   if(!id) {
     res.status(403).send({
@@ -323,6 +323,10 @@ app.post('/api/me/categories/:category/clues/:clue/:answer/:value', (req, res, n
     res.send(result.rows[0]);
   })
     .catch(next);
+});
+
+app.use((req, res) => {
+  res.sendFile('index.html', { root: 'public' }) ;
 });
 
 
