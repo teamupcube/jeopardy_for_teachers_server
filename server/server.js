@@ -183,6 +183,23 @@ app.get('/api/games-played', (req, res) => {
     });
 });
 
+app.get('/api/scores/:gameId', (req, res, next) => {
+  let gameId = req.params.gameId;
+  if(gameId === 'error') return next('bad gameId');
+  client.query(`
+  SELECT teams.id, teams.team, teams.score
+  FROM teams
+  JOIN team_game ON team_game.team_id = teams.id
+  JOIN games ON games.id = team_game.game_id
+  WHERE games.id = $1;
+    `,
+  [gameId]
+  ).then(result => {
+    res.send(result.rows);
+  })
+    .catch(next);
+});
+
 app.get('/api/results/:id', (req, res, next) => {
   let gameId = req.params.gameId;
   if(gameId === 'error') return next('bad gameId');
