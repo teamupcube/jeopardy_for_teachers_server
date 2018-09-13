@@ -168,14 +168,13 @@ app.get('/api/teams/:gameId', (req, res, next) => {
     })
     .catch(next);
 });
-
 app.get('/api/games-played', (req, res) => {
   client.query(`
-    SELECT distinct class_name
-    FROM clues_played
-    JOIN games ON clues_played.game_id = games.id
-    JOIN boards ON games.board_id = boards.id
-    WHERE user_id = $1;
+    SELECT DISTINCT games.class_name, games.id
+    FROM games
+    JOIN boards ON boards.id = games.board_id
+    WHERE boards.user_id = $1
+    ORDER BY games.id
   `,
   [req.userId]
   )
