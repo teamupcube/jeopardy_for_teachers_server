@@ -112,8 +112,8 @@ app.post('/api/teams/:teamName', (req, res, next) => {
   let teamName = req.params.teamName;
   if(teamName === 'error') return next('bad teamName');
   client.query(`
-    INSERT INTO teams(team)
-    VALUES ($1)
+    INSERT INTO teams(team, score)
+    VALUES ($1, 0)
     RETURNING *, id as "teamId";
     `,
   [teamName]
@@ -354,6 +354,23 @@ app.put('/api/game/:gameId/turn/:turn', (req,res,next) => {
   [gameId, turn])
     .catch(next);
 });
+
+
+app.get('/api/get-turn/:id', (req, res, next) => {
+  let gameId = req.params.id;
+  client.query(`
+    SELECT turn, team
+    FROM games
+    JOIN teams ON teams.id = games.turn
+    WHERE games.id = $1;
+  `,
+  [gameId]
+  ).then(result => {
+    res.send(result.rows);
+  })
+    .catch(next);
+});
+
 
 
 
