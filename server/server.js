@@ -341,6 +341,23 @@ app.post('/api/me/categories/:category/clues/:clue/:answer/:value', (req, res, n
     .catch(next);
 });
 
+app.delete('/api/delete-game/:gameId', (req, res) => {
+  let gameId = req.params.gameId
+  client.query(`
+    DELETE teams.id, teams.team, teams.score FROM teams WHERE team_game.team_id = teams.id
 
+
+    DELETE * FROM teams WHERE teams.id = team_game.team_id
+    AND
+    DELETE * FROM team_game WHERE games.id = team_game.game_id
+    AND
+    DELETE * FROM games WHERE games.id = $1; 
+  `,
+  [gameId]
+  ).then(() => {
+    res.send({ removed: true })
+  })
+
+})
 const PORT = process.env.PORT;
 app.listen(PORT, () => console.log('server humming along on port', PORT));
