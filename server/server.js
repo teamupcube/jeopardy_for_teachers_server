@@ -168,20 +168,36 @@ app.get('/api/teams/:gameId', (req, res, next) => {
   })
     .catch(next);
 });
-
 app.get('/api/games-played', (req, res) => {
   client.query(`
-    SELECT distinct class_name
-    FROM clues_played
-    JOIN games ON clues_played.game_id = games.id
-    JOIN boards ON games.board_id = boards.id
-    WHERE user_id = $1;
+    SELECT DISTINCT games.class_name, games.id
+    FROM games
+    JOIN boards ON boards.id = games.board_id
+    WHERE boards.user_id = $1
+    ORDER BY games.id
   `,
   [req.userId]
   )
     .then(result => {
       res.send(result.rows);
     });
+});
+
+app.get('/api/scores/:gameId', (req, res, next) => {
+  let gameId = req.params.gameId;
+  if(gameId === 'error') return next('bad gameId');
+  client.query(`
+  SELECT teams.id, teams.team, teams.score
+  FROM teams
+  JOIN team_game ON team_game.team_id = teams.id
+  JOIN games ON games.id = team_game.game_id
+  WHERE games.id = $1;
+    `,
+  [gameId]
+  ).then(result => {
+    res.send(result.rows);
+  })
+    .catch(next);
 });
 
 app.get('/api/results/:id', (req, res, next) => {
@@ -324,6 +340,21 @@ app.post('/api/me/categories/:category/clues/:clue/:answer/:value', (req, res, n
   })
     .catch(next);
 });
+
+app.put('/api/game/:gameId/turn/:turn', (req,res,next) => {
+  let gameId = req.params.gameId;
+  let turn = req.params.turn;
+  if(gameId === 'error' || turn === 'error') return next('bad input');
+  client.query(`
+    UPDATE games
+    SET turn = $2
+    WHERE games.id = $1
+    RETURNING games.turn;
+    `,
+  [gameId, turn])
+    .catch(next);
+});
+
 
 
 const PORT = process.env.PORT;
