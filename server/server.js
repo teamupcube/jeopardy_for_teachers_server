@@ -153,7 +153,7 @@ app.get('/api/me/boards', (req, res, next) => {
     .catch(next);
 });
 
-app.get('/api/games-played', (req, res, next) => {
+app.get('/api/games-played', (req, res) => {
   client.query(`
     SELECT distinct class_name
     FROM clues_played
