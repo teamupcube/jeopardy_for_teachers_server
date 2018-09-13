@@ -165,8 +165,8 @@ app.get('/api/games-played', (req, res, next) => {
   )
     .then(result => {
       res.send(result.rows);
-    })
-})
+    });
+});
 
 app.get('/api/results/:id', (req, res, next) => {
   let gameId = req.params.gameId;
@@ -183,7 +183,7 @@ app.get('/api/results/:id', (req, res, next) => {
     res.send(result.rows[0]);
   })
     .catch(next);
-})
+});
 
 app.get('/api/airdate', (req, res, next) => {
   client.query(`
