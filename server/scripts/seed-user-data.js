@@ -7,7 +7,7 @@ const users = require('./users.json');
 const teams = require('./teams.json');
 const games = require('./games.json');
 const team_game = require('./team_game.json');
-const clues_played = require('./clues-played.json')
+const clues_played = require('./clues-played.json');
 
 Promise.all(
 
