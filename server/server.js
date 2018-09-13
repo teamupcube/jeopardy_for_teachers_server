@@ -153,7 +153,7 @@ app.get('/api/me/boards', (req, res, next) => {
     .catch(next);
 });
 
-app.get('/api/games-played', (req, res, next) => {
+app.get('/api/games-played', (req, res) => {
   client.query(`
     SELECT distinct class_name
     FROM clues_played
@@ -219,11 +219,27 @@ app.get('/api/search/:keywords', (req, res, next) => {
     .catch(next);
 });
 
+app.get('/api/categories/:id', (req, res, next) => {
+  let gameId = req.params.id;
+  client.query(`
+    SELECT DISTINCT categories.category, clues.category_id
+    FROM games as g
+    JOIN boards ON g.board_id = boards.id
+    JOIN categories ON boards.id = categories.board_id
+    JOIN clues ON categories.id = category_id
+    WHERE g.id = $1;
+  `,
+  [gameId]
+  ).then(result => {
+    res.send(result.rows);
+  })
+    .catch(next);
+});
+
 app.get('/api/game/:id', (req, res, next) => {
   let gameId = req.params.id;
-
   client.query(`
-    SELECT g.class_name, g.board_id, boards.name, categories.category, clues.clue, clues.answer, clues.value
+    SELECT g.class_name, g.board_id, boards.name, categories.category, clues.category_id, clues.clue, clues.id, clues.answer, clues.value
     FROM games as g
     JOIN boards ON g.board_id = boards.id
     JOIN categories ON boards.id = categories.board_id
