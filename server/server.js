@@ -341,6 +341,21 @@ app.post('/api/me/categories/:category/clues/:clue/:answer/:value', (req, res, n
     .catch(next);
 });
 
+app.put('/api/game/:gameId/turn/:turn', (req,res,next) => {
+  let gameId = req.params.gameId;
+  let turn = req.params.turn;
+  if(gameId === 'error' || turn === 'error') return next('bad input');
+  client.query(`
+    UPDATE games
+    SET turn = $2
+    WHERE games.id = $1
+    RETURNING games.turn;
+    `,
+  [gameId, turn])
+    .catch(next);
+});
+
+
 
 const PORT = process.env.PORT;
 app.listen(PORT, () => console.log('server humming along on port', PORT));
