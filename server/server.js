@@ -165,8 +165,8 @@ app.get('/api/games-played', (req, res, next) => {
   )
     .then(result => {
       res.send(result.rows);
-    })
-})
+    });
+});
 
 app.get('/api/results/:id', (req, res, next) => {
   let gameId = req.params.gameId;
@@ -183,7 +183,7 @@ app.get('/api/results/:id', (req, res, next) => {
     res.send(result.rows[0]);
   })
     .catch(next);
-})
+});
 
 app.get('/api/airdate', (req, res, next) => {
   client.query(`
@@ -216,6 +216,24 @@ app.get('/api/search/:keywords', (req, res, next) => {
     .then(result => {
       res.send(result.rows);
     })
+    .catch(next);
+});
+
+app.get('/api/game/:id', (req, res, next) => {
+  let gameId = req.params.id;
+
+  client.query(`
+    SELECT g.class_name, g.board_id, boards.name, categories.category, clues.clue, clues.answer, clues.value
+    FROM games as g
+    JOIN boards ON g.board_id = boards.id
+    JOIN categories ON boards.id = categories.board_id
+    JOIN clues ON categories.id = category_id
+    WHERE g.id = $1;
+  `,
+  [gameId]
+  ).then(result => {
+    res.send(result.rows);
+  })
     .catch(next);
 });
 
