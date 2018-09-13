@@ -223,13 +223,16 @@ app.get('/api/game/:id', (req, res, next) => {
   let gameId = req.params.id;
 
   client.query(`
-    SELECT id, class_name, board_id
-    FROM games
-    WHERE id = $1;
+    SELECT g.class_name, g.board_id, boards.name, categories.category, clues.clue, clues.answer, clues.value
+    FROM games as g
+    JOIN boards ON g.board_id = boards.id
+    JOIN categories ON boards.id = categories.board_id
+    JOIN clues ON categories.id = category_id
+    WHERE g.id = $1;
   `,
   [gameId]
   ).then(result => {
-    res.send(result.rows[0]);
+    res.send(result.rows);
   })
     .catch(next);
 });
