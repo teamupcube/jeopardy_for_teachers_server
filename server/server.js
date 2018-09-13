@@ -153,6 +153,22 @@ app.get('/api/me/boards', (req, res, next) => {
     .catch(next);
 });
 
+app.get('/api/teams/:gameId', (req, res, next) => {
+  let gameId = req.params.gameId;
+  if(gameId === 'error') return next('bad gameId');
+  client.query(`
+    SELECT teams.team, teams.id
+    FROM teams
+    JOIN team_game ON team_game.team_id = teams.id
+    WHERE team_game.game_id = $1
+  `,
+  [gameId]
+  ).then(result => {
+      res.send(result.rows);
+    })
+    .catch(next);
+});
+
 app.get('/api/games-played', (req, res) => {
   client.query(`
     SELECT distinct class_name
@@ -175,7 +191,7 @@ app.get('/api/results/:id', (req, res, next) => {
     SELECT *
     FROM teams
     JOIN team_game on teams.id = team_game.team_id
-    JOIN games on games.id = 1
+    JOIN games on games.id = $1
     RETURNING *;
     `,
   [gameId]
@@ -204,7 +220,6 @@ app.get('/api/airdate', (req, res, next) => {
 app.get('/api/search/:keywords', (req, res, next) => {
   let keywords = req.params.keywords;
   console.log('req', req.params);
-  
   client.query(`
   SELECT c.id, c.round, category, c.value, c.clue, c.answer, airdate
   FROM historic_clues as c
