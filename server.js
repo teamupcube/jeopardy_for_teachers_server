@@ -352,7 +352,6 @@ app.get('/api/me/boards/categories/:id', (req, res, next) => {
     SELECT DISTINCT categories.category
     FROM boards as b
     JOIN categories ON b.id = categories.board_id
-    JOIN clues ON categories.id = category_id
     WHERE b.id = $1;
   `,
   [boardId]
@@ -370,6 +369,21 @@ app.get('/api/me/boards/clues/:id', (req, res, next) => {
     JOIN categories ON boards.id = categories.board_id
     JOIN clues ON categories.id = category_id
     WHERE boards.id = $1;
+  `,
+  [boardId]
+  ).then(result => {
+    res.send(result.rows);
+  })
+    .catch(next);
+});
+
+app.get('/api/me/boards/categories/:id', (req, res, next) => {
+  let boardId = req.params.id;
+  client.query(`
+    SELECT COUNT(DISTINCT categories.category)
+    FROM boards as b
+    JOIN categories ON b.id = categories.board_id
+    WHERE b.id = $1;
   `,
   [boardId]
   ).then(result => {
