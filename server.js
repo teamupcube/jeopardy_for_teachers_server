@@ -360,6 +360,9 @@ app.put('/api/game/:gameId/turn/:turn', (req, res, next) => {
     RETURNING games.turn;
     `,
   [gameId, turn])
+    .then(result => {
+      res.send(result.rows);
+    })
     .catch(next);
 });
 
@@ -377,6 +380,20 @@ app.get('/api/get-turn/:id', (req, res, next) => {
   })
     .catch(next);
 });
+
+// app.put('/api/:gameId/add-turn/:turn', (req, res, next) => {
+//   let gameId = req.params.gameId;
+  
+//   let turn = req.params.turn;
+//   if(gameId === 'error' || turn === 'error') return next('bad input');
+//   client.query(`
+//     UPDATE games
+//     SET turn = $2
+//     WHERE games.id = $1;
+//     `,
+//   [gameId, turn])
+//     .catch(next)
+// });
 
 // SOFIE AND CLAIRE TRYING TO REWORK THINGS:
 // app.get('/api/get-turn/:id', (req, res, next) => {
