@@ -346,6 +346,38 @@ app.post('/api/me/categories/:category/clues/:clue/:answer/:value', (req, res, n
     .catch(next);
 });
 
+app.get('/api/me/boards/categories/:id', (req, res, next) => {
+  let boardId = req.params.id;
+  client.query(`
+    SELECT DISTINCT categories.category
+    FROM boards as b
+    JOIN categories ON b.id = categories.board_id
+    JOIN clues ON categories.id = category_id
+    WHERE b.id = $1;
+  `,
+  [boardId]
+  ).then(result => {
+    res.send(result.rows);
+  })
+    .catch(next);
+});
+
+app.get('/api/me/boards/clues/:id', (req, res, next) => {
+  let boardId = req.params.id;
+  client.query(`
+    SELECT boards.name, categories.category, clues.category_id, clues.clue, clues.id, clues.answer, clues.value
+    FROM boards
+    JOIN categories ON boards.id = categories.board_id
+    JOIN clues ON categories.id = category_id
+    WHERE boards.id = $1;
+  `,
+  [boardId]
+  ).then(result => {
+    res.send(result.rows);
+  })
+    .catch(next);
+});
+
 
 // app.put('/api/game/:gameId/turn/:turn', (req, res, next) => {
 //   let gameId = req.params.gameId;
