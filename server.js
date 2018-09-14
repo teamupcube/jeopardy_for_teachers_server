@@ -389,7 +389,7 @@ app.delete('/api/delete-game/:gameId', (req, res) => {
   [gameId]
   ).then(() => {
     res.send({ removed: true });
-  })
+  });
 });
 
 const PORT = process.env.PORT;
