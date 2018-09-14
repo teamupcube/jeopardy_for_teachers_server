@@ -18,12 +18,10 @@ How to Play
 	-View Final Results and Play Again!
 
 How to Create a New Board
-	-Create Log-in credentials, or Sign In
-	-You May Choose From a Saved Board, or Create a New Board. 
-	-Add Class Name (for example: “2nd period History”)
-	-Name your Two Teams
-	-Continue Through the Game
-	-View Final Results and Play Again!
+	-Select *Create a New Board*
+  -Choose If You Want to Create Your Own Clues, Or If You Want To Search The Database Of Over     300,000 Jeopardy Questions
+  -Select A Category Name
+	
 
 Authors
 	•	Claire Flanagan - (https://github.com/R-i-t-a)
