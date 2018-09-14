@@ -347,34 +347,36 @@ app.post('/api/me/categories/:category/clues/:clue/:answer/:value', (req, res, n
 });
 
 
-// app.put('/api/game/:gameId/turn/:turn', (req, res, next) => {
-//   let gameId = req.params.gameId;
-//   let turn = req.params.turn;
-//   if(gameId === 'error' || turn === 'error') return next('bad input');
-//   client.query(`
-//     UPDATE games
-//     SET turn = $2
-//     WHERE games.id = $1
-//     RETURNING games.turn;
-//     `,
-//   [gameId, turn])
-//     .catch(next);
-// });
+app.put('/api/game/:gameId/turn/:turn', (req, res, next) => {
+  let gameId = req.params.gameId;
+  console.log(gameId)
+  let turn = req.params.turn;
+  console.log(turn)
+  if(gameId === 'error' || turn === 'error') return next('bad input');
+  client.query(`
+    UPDATE games
+    SET turn = $2
+    WHERE games.id = $1
+    RETURNING games.turn;
+    `,
+  [gameId, turn])
+    .catch(next);
+});
 
-// app.get('/api/get-turn/:id', (req, res, next) => {
-//   let gameId = req.params.id;
-//   client.query(`
-//     SELECT turn, team
-//     FROM games
-//     JOIN teams ON teams.id = games.turn
-//     WHERE games.id = $1;
-//   `,
-//   [gameId]
-//   ).then(result => {
-//     res.send(result.rows);
-//   })
-//     .catch(next);
-// });
+app.get('/api/get-turn/:id', (req, res, next) => {
+  let gameId = req.params.id;
+  client.query(`
+    SELECT turn
+    FROM games
+    JOIN teams ON teams.team = games.turn
+    WHERE games.id = $1;
+  `,
+  [gameId]
+  ).then(result => {
+    res.send(result.rows);
+  })
+    .catch(next);
+});
 
 // SOFIE AND CLAIRE TRYING TO REWORK THINGS:
 // app.get('/api/get-turn/:id', (req, res, next) => {
