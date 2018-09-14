@@ -237,11 +237,10 @@ app.get('/api/airdate', (req, res, next) => {
 
 app.get('/api/search/:keywords', (req, res, next) => {
   let keywords = req.params.keywords;
-  console.log('req', req.params);
+  console.log('req', req.params.keywords);
   client.query(`
-  SELECT c.id, c.round, category, c.value, c.clue, c.answer, airdate
+  SELECT c.id, c.round, category, c.value, c.clue, c.answer
   FROM historic_clues as c
-  JOIN historic_airdates ON c.game_id = historic_airdates.id
   JOIN historic_categories ON c.category_id = historic_categories.id
   WHERE category LIKE '%${keywords}%' OR c.clue LIKE '%${keywords}%' OR c.answer LIKE '%${keywords}%'
   ORDER BY(round, category, value);
