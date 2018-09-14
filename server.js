@@ -92,9 +92,9 @@ app.use('/api', (req, res, next) => {
   next();
 });
 
-app.use((req, res) => {
-  res.sendFile('index.html', { root: 'public' }) ;
-});
+// app.use((req, res) => {
+//   res.sendFile('index.html', { root: 'public' }) ;
+// });
 
 app.post('/api/games/:className/:boardId', (req, res, next) => {
   let className = req.params.className;
@@ -379,8 +379,18 @@ app.get('/api/get-turn/:id', (req, res, next) => {
     .catch(next);
 });
 
-
-
+app.delete('/api/delete-game/:gameId', (req, res) => { 
+  let gameId = req.params.gameId;
+  console.log(gameId);
+  client.query(`
+    DELETE FROM team_game WHERE game_id = $1;
+    DELETE FROM games WHERE games.id = $1;
+  `,
+  [gameId]
+  ).then(() => {
+    res.send({ removed: true });
+  })
+});
 
 const PORT = process.env.PORT;
 app.listen(PORT, () => console.log('server humming along on port', PORT));
