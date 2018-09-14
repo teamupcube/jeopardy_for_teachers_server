@@ -409,9 +409,7 @@ app.delete('/api/deleteGames/:gameId', (req, res, next) => {
 
 app.put('/api/game/:gameId/turn/:turn', (req, res, next) => {
   let gameId = req.params.gameId;
-  console.log(gameId)
   let turn = req.params.turn;
-  console.log(turn)
   if(gameId === 'error' || turn === 'error') return next('bad input');
   client.query(`
     UPDATE games
