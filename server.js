@@ -15,7 +15,7 @@ app.post('/api/auth/signup', (req, res) => {
   const body = req.body;
   const name = body.name;
   const password = body.password;
-
+  
   if(!name || !password) {
     res.status(400).send({
       error: 'name and password are required'
@@ -346,6 +346,7 @@ app.post('/api/me/categories/:category/clues/:clue/:answer/:value', (req, res, n
     .catch(next);
 });
 
+
 // app.put('/api/game/:gameId/turn/:turn', (req, res, next) => {
 //   let gameId = req.params.gameId;
 //   let turn = req.params.turn;
@@ -386,6 +387,12 @@ app.post('/api/me/categories/:category/clues/:clue/:answer/:value', (req, res, n
 //   })
 //     .catch(next);
 // });
+
+// app.use((req, res) => {
+//   res.sendFile('index.html', { root: 'public' }) ;
+// });
+
+
 
 
 
