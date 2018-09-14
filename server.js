@@ -377,17 +377,19 @@ app.get('/api/me/boards/clues/:id', (req, res, next) => {
     .catch(next);
 });
 
-app.get('/api/me/boards/categories/:id', (req, res, next) => {
+app.get('/api/me/boards/categoryNumber/:id', (req, res, next) => {
   let boardId = req.params.id;
+  console.log('server', boardId);
   client.query(`
-    SELECT COUNT(DISTINCT categories.category)
+    SELECT COUNT(categories.category)
     FROM boards as b
     JOIN categories ON b.id = categories.board_id
     WHERE b.id = $1;
   `,
   [boardId]
   ).then(result => {
-    res.send(result.rows);
+    console.log('server', res.send(result.rows[0]));
+    res.send(result.rows[0]);
   })
     .catch(next);
 });
