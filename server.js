@@ -92,9 +92,9 @@ app.use('/api', (req, res, next) => {
   next();
 });
 
-app.use((req, res) => {
-  res.sendFile('index.html', { root: 'public' }) ;
-});
+// app.use((req, res) => {
+//   res.sendFile('index.html', { root: 'public' }) ;
+// });
 
 app.post('/api/games/:className/:boardId', (req, res, next) => {
   let className = req.params.className;
