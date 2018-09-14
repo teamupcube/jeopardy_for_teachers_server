@@ -6,23 +6,24 @@ Getting Started
 Alternatively, the game can be found on GitHub:  https://github.com/teamupcube
 
 How to Play
-	•	Arrive on Welcome Page, click “Sign In”
-	•	Create Log-in credentials, or Sign In
-	•	You May Choose From a Saved Board, or Create a New Board. (If You Decide to Create a New Board, See How to Create a New Board Below)
-
-	•	Add Class Name (for example: “2nd period History”)
-	•	Name your Two Teams
-	•	Continue Through the Game
-	•	View Final Results and Play Again!
+	-Arrive on Welcome Page, click *Sign In*
+	-Create Log-in credentials, or Sign In
+	-You May Choose From a Saved Board, or Create a New Board (If You Want to Create a New Board,   See How to Create a New Board Below)
+	-Add Class Name (for example: “2nd period History”)
+	-Name your Teams
+	-Continue Through the Instructions Page	
+  <!-- -Assign Which Team Takes the First Turn -->
+  -Continue to the Game Board
+  -Have Team Select Category and Then Point Value. Click to View Clue. Have Teams Take Turns      Picking Questions, Once Answered, You May See Correct Answer and Then Select                   Correct/Incorrect/NoAnswer to Submit Correct Point Value to Team 
+	-View Final Results and Play Again!
 
 How to Create a New Board
-	
-	•	Create Log-in credentials, or Sign In
-	•	Add Class Name (for example: “2nd period History”)
-	•	You May Choose From a Saved Board, or Create a New Board. 
-	•	Name your Two Teams
-	•	Continue Through the Game
-	•	View Final Results and Play Again!
+	-Create Log-in credentials, or Sign In
+	-You May Choose From a Saved Board, or Create a New Board. 
+	-Add Class Name (for example: “2nd period History”)
+	-Name your Two Teams
+	-Continue Through the Game
+	-View Final Results and Play Again!
 
 Authors
 	•	Claire Flanagan - (https://github.com/R-i-t-a)
