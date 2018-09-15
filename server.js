@@ -436,7 +436,17 @@ app.get('/api/get-turn/:id', (req, res, next) => {
     .catch(next);
 }),
         
-        
+app.put('/api/team-id/:teamId/set-score/:newScore', (req, res, next) => {
+  let teamId = req.params.teamId;
+  let newScore = req.params.newScore;
+  if(teamId === 'error' || newScore === 'error') return next('bad input');
+  client.query(`
+  UPDATE teams
+  SET score = $2
+  WHERE id = $1;
+  `,
+  [teamId,newScore])
+});      
         
         
         
