@@ -445,7 +445,7 @@ app.put('/api/team-id/:teamId/set-score/:newScore', (req, res, next) => {
   SET score = $2
   WHERE id = $1;
   `,
-  [teamId,newScore])
+  [teamId, newScore]);
 });      
 
 app.post('/api/clue-played/:clueId/game/:gameId', (req, res, next) => {
