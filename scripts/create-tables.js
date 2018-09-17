@@ -39,7 +39,7 @@ client.query(`
     id SERIAL PRIMARY KEY,
     class_name VARCHAR(256) NOT NULL,
     board_id INTEGER NOT NULL REFERENCES boards(id),
-    turn VARCHAR(256)  
+    turn VARCHAR(256)
   );
 
   CREATE TABLE IF NOT EXISTS team_game (
