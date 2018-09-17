@@ -401,6 +401,18 @@ app.delete('/api/delete-clues-played/:gameId', (req, res, next) => {
     .catch(next);
 });
 
+app.delete('/api/delete-team-game/:gameId', (req, res, next) => {
+  let gameId = req.params.gameId;
+  client.query(`
+  delete from team_game where game_id=$1;
+  `,
+  [gameId]
+  ).then(() => {
+    res.send({ removed: true });
+  })
+    .catch(next);
+});
+
 app.delete('/api/delete-game/:gameId', (req, res, next) => {
   let gameId = req.params.gameId;
   client.query(`

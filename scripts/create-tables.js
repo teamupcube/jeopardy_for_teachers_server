@@ -44,7 +44,7 @@ client.query(`
 
   CREATE TABLE IF NOT EXISTS team_game (
     id SERIAL PRIMARY KEY,
-    team_id INTEGER NOT NULL REFERENCES teams(id), 
+    team_id INTEGER NOT NULL REFERENCES teams(id) ON DELETE CASCADE, 
     game_id INTEGER NOT NULL REFERENCES games(id)
   );
 
