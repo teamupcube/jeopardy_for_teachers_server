@@ -435,8 +435,49 @@ app.get('/api/get-turn/:id', (req, res, next) => {
     .catch(next);
 }),
         
-        
-        
+app.put('/api/team-id/:teamId/set-score/:newScore', (req, res, next) => {
+  let teamId = req.params.teamId;
+  let newScore = req.params.newScore;
+  if(teamId === 'error' || newScore === 'error') return next('bad input');
+  client.query(`
+  UPDATE teams
+  SET score = $2
+  WHERE id = $1;
+  `,
+  [teamId, newScore]);
+});      
+
+app.post('/api/clue-played/:clueId/game/:gameId', (req, res, next) => {
+  let clueId = req.params.clueId;
+  let gameId = req.params.gameId;
+  if(clueId === 'error' || gameId === 'error') return next('bad name');
+  client.query(`
+  INSERT INTO clues_played (clue_id, game_id)
+  VALUES ($1, $2)
+  RETURNING *;
+  `,
+  [clueId, gameId]
+  ).then(result => {
+    res.send(result.rows);
+  })
+    .catch(next);
+});
+
+app.get('/api/clues-played/game/:gameId', (req, res, next) => {
+  let gameId = req.params.gameId;
+  if(gameId === 'error') return next('bad name');
+  client.query(`
+  SELECT clue_id
+  FROM clues_played
+  WHERE game_id = $1;
+  `,
+  [gameId]
+  ).then(result => {
+    res.send(result.rows);
+  })
+    .catch(next);
+});
+
         
         
 app.use((req, res) => {
