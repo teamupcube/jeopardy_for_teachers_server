@@ -92,7 +92,6 @@ app.use('/api', (req, res, next) => {
   next();
 });
 
-
 app.post('/api/games/:className/:boardId', (req, res, next) => {
   let className = req.params.className;
   let boardId = req.params.boardId;
@@ -170,6 +169,7 @@ app.get('/api/teams/:gameId', (req, res, next) => {
   })
     .catch(next);
 });
+
 app.get('/api/games-played', (req, res) => {
   client.query(`
   SELECT DISTINCT games.class_name, games.id
@@ -233,7 +233,6 @@ app.get('/api/airdate', (req, res, next) => {
     })
     .catch(next);
 });
-
 
 app.get('/api/search/:keywords', (req, res, next) => {
   let keywords = req.params.keywords;
@@ -402,7 +401,6 @@ app.delete('/api/deleteGames/:gameId', (req, res, next) => {
     .catch(next);
 });
 
-
 app.put('/api/game/:gameId/turn/:turn', (req, res, next) => {
   let gameId = req.params.gameId;
   let turn = req.params.turn;
@@ -476,9 +474,7 @@ app.get('/api/clues-played/game/:gameId', (req, res, next) => {
     res.send(result.rows);
   })
     .catch(next);
-});
-
-        
+});        
         
 app.use((req, res) => {
   res.sendFile('index.html', { root: 'public' }) ;
