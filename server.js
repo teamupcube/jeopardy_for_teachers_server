@@ -389,10 +389,10 @@ app.get('/api/me/boards/categoryNumber/:id', (req, res, next) => {
     .catch(next);
 });
 
-app.delete('/api/delete-team-game/:gameId', (req, res, next) => {
+app.delete('/api/delete-clues-played/:gameId', (req, res, next) => {
   let gameId = req.params.gameId;
   client.query(`
-  delete from team_game where game_id=$1;
+  delete from clues_played where game_id=$1;
   `,
   [gameId]
   ).then(() => {
