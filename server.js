@@ -389,30 +389,6 @@ app.get('/api/me/boards/categoryNumber/:id', (req, res, next) => {
     .catch(next);
 });
 
-app.delete('/api/delete-team-game/:gameId', (req, res, next) => {
-  let gameId = req.params.gameId;
-  client.query(`
-  delete from team_game where game_id=$1;
-  `,
-  [gameId]
-  ).then(() => {
-    res.send({ removed: true });
-  })
-    .catch(next);
-});
-
-app.delete('/api/delete-game/:gameId', (req, res, next) => {
-  let gameId = req.params.gameId;
-  client.query(`
-  delete from games where id=$1;
-  `,
-  [gameId]
-  ).then(() => {
-    res.send({ removed: true });
-  })
-    .catch(next);
-});
-
 app.put('/api/game/:gameId/turn/:turn', (req, res, next) => {
   let gameId = req.params.gameId;
   let turn = req.params.turn;
